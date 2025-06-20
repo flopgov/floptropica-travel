@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Floptropica Travel - Packages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f9f7f9;
+      color: #333;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* NAV */
+    nav {
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      border-bottom: 2px solid #ffc0cb;
+    }
+    nav a {
+      color: #ff6f91;
+      transition: color 0.3s ease;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #ff4c74;
+      border-bottom-color: #ff4c74;
+    }
+    nav a[aria-current="page"] {
+      color: #ff4c74;
+      border-bottom-color: #ff4c74;
+    }
+    /* HEADER */
+    header {
+      padding: 3rem 1rem 2rem;
+      text-align: center;
+      color: #ff4c74;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      font-size: 2rem;
+    }
+    /* PACKAGES GRID */
+    .packages {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 1rem;
+    }
+    .packages h2 {
+      font-weight: 800;
+      font-size: 2.25rem;
+      color: #ff4c74;
+      margin-bottom: 1.2rem;
+      border-left: 5px solid #ffb6c1;
+      padding-left: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+    .card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(255, 105, 130, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 30px rgba(255, 76, 116, 0.25);
+    }
+    .card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 1rem 1.2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+    .card-content h3 {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 0.3rem;
+      color: #ff4c74;
+      text-transform: capitalize;
+    }
+    .package-info {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .price {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #ff4c74;
+      margin-bottom: 1rem;
+    }
+    .book-btn {
+      padding: 0.65rem;
+      border: none;
+      border-radius: 10px;
+      background: #ff6f91;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 4px 14px rgba(255, 111, 145, 0.6);
+      align-self: flex-start;
+    }
+    .book-btn:hover {
+      background: #ff4c74;
+      box-shadow: 0 6px 18px rgba(255, 76, 116, 0.8);
+    }
+    .sold-out {
+      color: #d32f2f;
+      font-weight: 900;
+      margin-top: 0.5rem;
+      font-size: 1.05rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+    /* FOOTER */
+    footer {
+      background: #ffe3ec;
+      color: #ad1457;
+      padding: 2rem 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-top: 3px solid #ff4c74;
+      letter-spacing: 0.05em;
+    }
+    .footer-links {
+      margin-top: 0.7rem;
+    }
+    .footer-links a {
+      color: #ad1457;
+      margin: 0 0.6rem;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover {
+      color: #ff4c74;
+      text-decoration: underline;
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      nav {
+        gap: 1.2rem;
+        font-size: 0.8rem;
+        padding: 1rem;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="flights.html">FLIGHTS</a>
+    <a href="hotels.html">HOTELS</a>
+    <a href="packages.html" aria-current="page">PACKAGES</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+
+  <header role="banner">
+    floptravel packages
+  </header>
+
+  <section class="packages" aria-live="polite" aria-atomic="true" aria-relevant="additions">
+    <h2>best deals</h2>
+    <div class="card-grid">
+      <article class="card" tabindex="0">
+        <img src="https://source.unsplash.com/400x300/?beach,resort" alt="Beach resort" />
+        <div class="card-content">
+          <h3>beach getaway package</h3>
+          <div class="package-info">Round-trip flight + 5 nights at Sunset Suites</div>
+          <div class="price">$1,299</div>
+          <button class="book-btn" onclick="soldOut(this)">book now</button>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="https://source.unsplash.com/400x300/?city,hotel" alt="City hotel" />
+        <div class="card-content">
+          <h3>city explorer package</h3>
+          <div class="package-info">Flight + 4 nights at Skyline Stay</div>
+          <div class="price">$1,099</div>
+          <button class="book-btn" onclick="soldOut(this)">book now</button>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="https://source.unsplash.com/400x300/?luxury,travel" alt="Luxury resort" />
+        <div class="card-content">
+          <h3>luxury retreat package</h3>
+          <div class="package-info">Flight + 7 nights at The Flop Palace</div>
+          <div class="price">$2,499</div>
+          <button class="book-btn" onclick="soldOut(this)">book now</button>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="https://source.unsplash.com/400x300/?pool,resort" alt="Pool resort" />
+        <div class="card-content">
+          <h3>relax & recharge package</h3>
+          <div class="package-info">Flight + 6 nights at Coral Reef Inn</div>
+          <div class="price">$1,799</div>
+          <button class="book-btn" onclick="soldOut(this)">book now</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 floptropica travel. all rights flopped.</p>
+    <div class="footer-links" role="contentinfo">
+      <a href="#">terms</a> | <a href="#">privacy</a> | <a href="#">help</a>
+    </div>
+  </footer>
+
+  <script>
+    function soldOut(button) {
+      if (!button.disabled) {
+        button.insertAdjacentHTML('afterend', '<div class="sold-out">Sold Out</div>');
+        button.disabled = true;
+        button.style.background = '#ccc';
+        button.style.cursor = 'not-allowed';
+      }
+    }
+  </script>
+</body>
+</html>
