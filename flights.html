@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Floptropica Travel - Flights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f9f7f9;
+      color: #333;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* NAV */
+    nav {
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      border-bottom: 2px solid #ffc0cb;
+    }
+    nav a {
+      color: #ff6f91;
+      transition: color 0.3s ease;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #ff4c74;
+      border-bottom-color: #ff4c74;
+    }
+    nav a[aria-current="page"] {
+      color: #ff4c74;
+      border-bottom-color: #ff4c74;
+    }
+    /* HEADER */
+    header {
+      padding: 3rem 1rem 2rem;
+      text-align: center;
+      color: #ff4c74;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      font-size: 2rem;
+    }
+    /* FLIGHT SEARCH FORM */
+    .flight-search {
+      background: #fff;
+      max-width: 960px;
+      margin: 0 auto 2rem;
+      padding: 1.75rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(255, 105, 130, 0.25);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .flight-search label {
+      flex: 1 1 150px;
+      display: flex;
+      flex-direction: column;
+      font-weight: 600;
+      color: #ff4c74;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+    .flight-search input,
+    .flight-search select {
+      margin-top: 0.35rem;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: 1.5px solid #ffb6c1;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #333;
+      transition: border-color 0.3s ease;
+    }
+    .flight-search input:focus,
+    .flight-search select:focus {
+      outline: none;
+      border-color: #ff4c74;
+      box-shadow: 0 0 8px rgba(255, 76, 116, 0.6);
+    }
+    .flight-search button {
+      background: #ff6f91;
+      border: none;
+      border-radius: 10px;
+      padding: 0.9rem 2rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(255, 111, 145, 0.6);
+      transition: background 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      margin-top: 1.5rem;
+    }
+    .flight-search button:hover,
+    .flight-search button:focus {
+      background: #ff4c74;
+      box-shadow: 0 8px 18px rgba(255, 76, 116, 0.8);
+    }
+    /* RESULTS SECTION */
+    .results {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 1rem;
+    }
+    .results h2 {
+      font-weight: 800;
+      font-size: 2.25rem;
+      color: #ff4c74;
+      margin-bottom: 1.2rem;
+      border-left: 5px solid #ffb6c1;
+      padding-left: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+    .card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(255, 105, 130, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      padding: 1.2rem 1.5rem;
+      user-select: none;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 30px rgba(255, 76, 116, 0.25);
+    }
+    .card h3 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #ff4c74;
+      text-transform: capitalize;
+    }
+    .flight-info {
+      color: #666;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .book-btn {
+      padding: 0.65rem;
+      border: none;
+      border-radius: 10px;
+      background: #ff6f91;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 4px 14px rgba(255, 111, 145, 0.6);
+      align-self: flex-start;
+    }
+    .book-btn:hover {
+      background: #ff4c74;
+      box-shadow: 0 6px 18px rgba(255, 76, 116, 0.8);
+    }
+    .sold-out {
+      color: #d32f2f;
+      font-weight: 900;
+      margin-top: 0.5rem;
+      font-size: 1.05rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+    /* FOOTER */
+    footer {
+      background: #ffe3ec;
+      color: #ad1457;
+      padding: 2rem 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-top: 3px solid #ff4c74;
+      letter-spacing: 0.05em;
+    }
+    .footer-links {
+      margin-top: 0.7rem;
+    }
+    .footer-links a {
+      color: #ad1457;
+      margin: 0 0.6rem;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover {
+      color: #ff4c74;
+      text-decoration: underline;
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      nav {
+        gap: 1.2rem;
+        font-size: 0.8rem;
+        padding: 1rem;
+      }
+      .flight-search {
+        flex-direction: column;
+      }
+      .flight-search label {
+        flex: 1 1 100%;
+        margin-bottom: 0.5rem;
+      }
+      .flight-search button {
+        width: 100%;
+        margin-top: 1rem;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="flights.html" aria-current="page">FLIGHTS</a>
+    <a href="hotels.html">HOTELS</a>
+    <a href="packages.html">PACKAGES</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+
+  <header role="banner">
+    flights to floptropica
+  </header>
+
+  <section class="flight-search" role="search" aria-label="Flight search form">
+    <label for="from">from</label>
+    <input id="from" type="text" placeholder="City or airport" aria-required="true" />
+
+    <label for="to">to</label>
+    <input id="to" type="text" value="floptropica" readonly aria-readonly="true" aria-required="true" />
+
+    <label for="depart-date">departure</label>
+    <input id="depart-date" type="date" aria-required="true" />
+
+    <label for="return-date">return</label>
+    <input id="return-date" type="date" />
+
+    <label for="passengers">passengers</label>
+    <select id="passengers" aria-required="true" >
+      <option value="1">1 passenger</option>
+      <option value="2">2 passengers</option>
+      <option value="3">3 passengers</option>
+      <option value="4">4 passengers</option>
+      <option value="5">5 passengers</option>
+    </select>
+
+    <button onclick="alert('Sold Out 😔')" aria-label="Search flights">search flights</button>
+  </section>
+
+  <section class="results" aria-live="polite" aria-atomic="true" aria-relevant="additions">
+    <h2>available flights</h2>
+    <div class="card-grid">
+      <article class="card" tabindex="0">
+        <h3>new york ➡️ floptropica</h3>
+        <p class="flight-info">Nonstop • Economy • $399</p>
+        <button class="book-btn" onclick="soldOut(this)">book now</button>
+      </article>
+      <article class="card" tabindex="0">
+        <h3>los angeles ➡️ floptropica</h3>
+        <p class="flight-info">1 Stop (Chicago) • Business • $749</p>
+        <button class="book-btn" onclick="soldOut(this)">book now</button>
+      </article>
+      <article class="card" tabindex="0">
+        <h3>london ➡️ floptropica</h3>
+        <p class="flight-info">Nonstop • Economy • $529</p>
+        <button class="book-btn" onclick="soldOut(this)">book now</button>
+      </article>
+      <article class="card" tabindex="0">
+        <h3>tokyo ➡️ floptropica</h3>
+        <p class="flight-info">1 Stop (Seoul) • Economy • $649</p>
+        <button class="book-btn" onclick="soldOut(this)">book now</button>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 floptropica travel. all rights flopped.</p>
+    <div class="footer-links" role="contentinfo">
+      <a href="#">terms</a> | <a href="#">privacy</a> | <a href="#">help</a>
+    </div>
+  </footer>
+
+  <script>
+    function soldOut(button) {
+      if (!button.disabled) {
+        button.insertAdjacentHTML('afterend', '<div class="sold-out">Sold Out</div>');
+        button.disabled = true;
+        button.style.background = '#ccc';
+        button.style.cursor = 'not-allowed';
+      }
+    }
+  </script>
+</body>
+</html>
