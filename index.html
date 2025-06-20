@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Floptropica Travel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f9f7f9;
+      color: #333;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+      font-size: 16px;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* NAV */
+    nav {
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      border-bottom: 2px solid #ffc0cb; /* light pink line */
+    }
+    nav a {
+      color: #ff6f91;
+      transition: color 0.3s ease;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #ff4c74;
+      border-bottom-color: #ff4c74;
+    }
+    /* HEADER */
+    header {
+      background: url('https://source.unsplash.com/1600x500/?beach,travel') no-repeat center center/cover;
+      color: #fff;
+      text-align: center;
+      padding: 5rem 1rem 3rem;
+      position: relative;
+      box-shadow: inset 0 0 0 1000px rgba(255 192 203 / 0.4); /* soft pink overlay */
+    }
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    header p {
+      font-weight: 600;
+      font-size: 1.25rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+      letter-spacing: 0.05em;
+    }
+    /* SEARCH BAR */
+    .hero-search {
+      background: #fff;
+      max-width: 960px;
+      margin: -3.5rem auto 3rem;
+      padding: 1.75rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(255, 105, 130, 0.25);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+    .hero-search input[type="text"],
+    .hero-search input[type="date"] {
+      flex: 1 1 180px;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1.5px solid #ffb6c1;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #333;
+      transition: border-color 0.3s ease;
+    }
+    .hero-search input[type="text"]:focus,
+    .hero-search input[type="date"]:focus {
+      outline: none;
+      border-color: #ff4c74;
+      box-shadow: 0 0 8px rgba(255, 76, 116, 0.6);
+    }
+    .hero-search button {
+      background: #ff6f91;
+      border: none;
+      border-radius: 10px;
+      padding: 0.9rem 1.8rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(255, 111, 145, 0.6);
+      transition: background 0.3s ease;
+      flex-shrink: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .hero-search button:hover,
+    .hero-search button:focus {
+      background: #ff4c74;
+      box-shadow: 0 8px 18px rgba(255, 76, 116, 0.8);
+    }
+    /* SECTIONS */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 1rem;
+    }
+    .section h2 {
+      font-weight: 800;
+      font-size: 2.5rem;
+      color: #ff4c74;
+      margin-bottom: 1.2rem;
+      border-left: 5px solid #ffb6c1;
+      padding-left: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    /* CARDS GRID */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+    }
+    .card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(255, 105, 130, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 30px rgba(255, 76, 116, 0.25);
+    }
+    .card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 1rem 1.2rem 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-content h3 {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      text-transform: capitalize;
+      color: #ff4c74;
+    }
+    .card-content p {
+      color: #666;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .book-btn {
+      padding: 0.65rem;
+      border: none;
+      border-radius: 10px;
+      background: #ff6f91;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 4px 14px rgba(255, 111, 145, 0.6);
+    }
+    .book-btn:hover {
+      background: #ff4c74;
+      box-shadow: 0 6px 18px rgba(255, 76, 116, 0.8);
+    }
+    .sold-out {
+      color: #d32f2f;
+      font-weight: 900;
+      margin-top: 0.5rem;
+      font-size: 1.05rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+    /* INFO SECTIONS */
+    .info-section p {
+      max-width: 900px;
+      margin: 0 auto;
+      color: #444;
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.7;
+      letter-spacing: 0.03em;
+    }
+    /* FOOTER */
+    footer {
+      background: #ffe3ec;
+      color: #ad1457;
+      padding: 2rem 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-top: 3px solid #ff4c74;
+      letter-spacing: 0.05em;
+    }
+    .footer-links {
+      margin-top: 0.7rem;
+    }
+    .footer-links a {
+      color: #ad1457;
+      margin: 0 0.6rem;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover {
+      color: #ff4c74;
+      text-decoration: underline;
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 2.3rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      .hero-search {
+        flex-wrap: wrap;
+        padding: 1.5rem;
+        margin: -3rem 1rem 2rem;
+      }
+      .hero-search input, .hero-search button {
+        flex: 1 1 100%;
+      }
+      nav {
+        gap: 1.2rem;
+        font-size: 0.8rem;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" aria-current="page">HOME</a>
+    <a href="flights.html">FLIGHTS</a>
+    <a href="hotels.html">HOTELS</a>
+    <a href="packages.html">PACKAGES</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+
+  <header role="banner">
+    <h1>floptropica travel</h1>
+    <p>escape to the ultimate flop island – if you can get a seat 😌</p>
+  </header>
+
+  <section class="hero-search" role="search" aria-label="Flight search form">
+    <input type="text" aria-label="Departure city or airport" placeholder="From (city or airport)" />
+    <input type="text" aria-label="Arrival city or airport" placeholder="To (floptropica)" value="floptropica" readonly />
+    <input type="date" aria-label="Departure date" />
+    <input type="date" aria-label="Return date" />
+    <button onclick="alert('Sold Out 😔')" aria-label="Search flights and hotels">SEARCH</button>
+  </section>
+
+  <section class="section" aria-labelledby="featured-title">
+    <h2 id="featured-title">featured destinations</h2>
+    <div class="card-grid">
+      <article class="card" tabindex="0">
+        <img src="https://source.unsplash.com/400x300/?newyork" alt="New York city skyline" />
+        <div class="card-content">
+          <h3>new york ➡️ floptropica</h3>
+          <p>nonstop • $399</p>
+          <button class="book-btn" onclick="soldOut(this)">book now</button>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="https://source.unsplash.com/400x300/?tokyo" alt="Tokyo cityscape" />
+        <div class="card-content">
+          <h3>tokyo ➡️ floptropica</h3>
+          <p>1 stop • $649</p>
+          <button class="book-btn" onclick="soldOut(this)">book now</button>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="https://source.unsplash.com/400x300/?london" alt="London city skyline" />
+        <div class="card-content">
+          <h3>london ➡️ floptropica</h3>
+          <p>nonstop • $529</p>
+          <button class="book-btn" onclick="soldOut(this)">book now</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section info-section" aria-labelledby="why-title">
+    <h2 id="why-title">why choose floptravel?</h2>
+    <p>
+      floptravel is your #1 portal to the island that never sleeps... mostly because it’s sold out. 
+      we’ve partnered with airlines, hotels, and local floptropica authorities to bring you the most chaotic 
+      but unforgettable experience of your life. from personalized travel deals to full-blown flop festivals, 
+      we deliver the drama so you don’t have to.
+    </p>
+  </section>
+
+  <section class="section info-section" aria-labelledby="visa-title">
+    <h2 id="visa-title">traveling to floptropica – visa info</h2>
+    <p>
+      most travelers require a flopvisa to enter floptropica. you can apply online, but approval is subject to national flopworthiness assessments. 
+      visa processing may take 5–7 business years. pro tip: bring glitter, a valid ID, and emotional support snacks. 
+      all visitors must agree to the flopcode upon arrival. 🛂✨
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 floptropica travel. all rights flopped.</p>
+    <div class="footer-links" role="contentinfo">
+      <a href="#">terms</a> | <a href="#">privacy</a> | <a href="#">help</a>
+    </div>
+  </footer>
+
+  <script>
+    function soldOut(button) {
+      button.insertAdjacentHTML('afterend', '<div class="sold-out">Sold Out</div>');
+      button.disabled = true;
+      button.style.background = '#ccc';
+      button.style.cursor = 'not-allowed';
+    }
+  </script>
+</body>
+</html>
